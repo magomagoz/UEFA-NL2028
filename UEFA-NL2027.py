@@ -43,8 +43,10 @@ if 'df_risultati' not in st.session_state:
                 "Match": row['Etichetta_Menu'],
                 "Casa": row['Casa'], 
                 "Ospite": row['Fuori'], 
-                "Gol Casa": 0, 
+                "Gol Casa": 0,
+                "xG Casa": 0.0,       # <--- NUOVO
                 "Gol Ospite": 0, 
+                "xG Ospite": 0.0,     # <--- NUOVO
                 "Giocata": False
             })
     st.session_state.df_risultati = pd.DataFrame(init_data)
@@ -57,11 +59,18 @@ if storico_file is not None:
     if st.session_state.get('last_loaded_file') != storico_file.name:
         try:
             df_salvato = pd.read_csv(storico_file, sep=";")
-            df_base = st.session_state.df_risultati.drop(columns=["Gol Casa", "Gol Ospite", "Giocata"])
-            df_merged = pd.merge(df_base, df_salvato[["ID_Match", "Gol Casa", "Gol Ospite", "Giocata"]], on="ID_Match", how="left")
+            df_base = st.session_state.df_risultati.drop(columns=["Gol Casa", "xG Casa", "Gol Ospite", "xG Ospite", "Giocata"], errors='ignore')
+            
+            # Assicuriamoci che il file salvato contenga le colonne xG per retrocompatibilità
+            if "xG Casa" not in df_salvato.columns: df_salvato["xG Casa"] = 0.0
+            if "xG Ospite" not in df_salvato.columns: df_salvato["xG Ospite"] = 0.0
+            
+            df_merged = pd.merge(df_base, df_salvato[["ID_Match", "Gol Casa", "xG Casa", "Gol Ospite", "xG Ospite", "Giocata"]], on="ID_Match", how="left")
             
             df_merged["Gol Casa"] = df_merged["Gol Casa"].fillna(0).astype(int)
+            df_merged["xG Casa"] = df_merged["xG Casa"].fillna(0.0).astype(float)
             df_merged["Gol Ospite"] = df_merged["Gol Ospite"].fillna(0).astype(int)
+            df_merged["xG Ospite"] = df_merged["xG Ospite"].fillna(0.0).astype(float)
             df_merged["Giocata"] = df_merged["Giocata"].fillna(False).astype(bool)
             
             st.session_state.df_risultati = df_merged
@@ -69,7 +78,7 @@ if storico_file is not None:
             st.sidebar.success("✅ Salvataggio ripristinato con successo!")
             st.rerun()
         except Exception as e:
-            st.sidebar.error(f"Errore durante il caricamento del salvataggio: {e}")
+            st.sidebar.error(f"Errore durante il caricamento: {e}")
 
 st.sidebar.markdown("---")
 
@@ -151,8 +160,10 @@ with st.expander("Apri il pannello per registrare i match conclusi", expanded=Fa
                 "ID_Match": None,
                 "Match": st.column_config.TextColumn("Incontro Programmato", disabled=True),
                 "Gol Casa": st.column_config.NumberColumn("Gol Casa", min_value=0, max_value=10, step=1),
+                "xG Casa": st.column_config.NumberColumn("xG Casa", min_value=0.0, max_value=10.0, step=0.1, format="%.2f"),
                 "Gol Ospite": st.column_config.NumberColumn("Gol Ospite", min_value=0, max_value=10, step=1),
-                "Giocata": st.column_config.CheckboxColumn("Partita Terminata?")
+                "xG Ospite": st.column_config.NumberColumn("xG Ospite", min_value=0.0, max_value=10.0, step=0.1, format="%.2f"),
+                "Giocata": st.column_config.CheckboxColumn("Giocata?")
             },
             disabled=["Match", "Casa", "Ospite"],
             hide_index=True,
@@ -160,7 +171,7 @@ with st.expander("Apri il pannello per registrare i match conclusi", expanded=Fa
         )
         st.session_state.df_risultati = edited_df
         
-        csv_export = edited_df[["ID_Match", "Gol Casa", "Gol Ospite", "Giocata"]].to_csv(index=False, sep=";").encode('utf-8')
+        csv_export = edited_df[["ID_Match", "Gol Casa", "xG Casa", "Gol Ospite", "xG Ospite", "Giocata"]].to_csv(index=False, sep=";").encode('utf-8')
         
         st.download_button(
             label="💾 CLICCA QUI PER SCARICARE I RISULTATI AGGIORNATI",
@@ -172,26 +183,40 @@ with st.expander("Apri il pannello per registrare i match conclusi", expanded=Fa
 
 # --- 8. RICALCOLO DINAMICO DEL RANKING MOBILE SUI DATI CARICATI/INSERITI ---
 scout_ratings = {k: v.copy() for k, v in scout_ratings_base.items()}
-stats_torneo = defaultdict(lambda: {'gf': 0, 'gs': 0, 'p': 0})
+stats_torneo = defaultdict(lambda: {'gf': 0, 'gs': 0, 'xg_f': 0.0, 'xg_s': 0.0, 'p': 0})
 
 for _, row in st.session_state.df_risultati.iterrows():
     if row['Giocata']:
         c, o = row['Casa'], row['Ospite']
         gc, go = int(row['Gol Casa']), int(row['Gol Ospite'])
+        xg_c, xg_o = float(row['xG Casa']), float(row['xG Ospite'])
         
+        # Aggiorna statistiche Casa
         stats_torneo[c]['gf'] += gc
         stats_torneo[c]['gs'] += go
+        stats_torneo[c]['xg_f'] += xg_c
+        stats_torneo[c]['xg_s'] += xg_o
         stats_torneo[c]['p'] += 1
         
+        # Aggiorna statistiche Ospite
         stats_torneo[o]['gf'] += go
         stats_torneo[o]['gs'] += gc
+        stats_torneo[o]['xg_f'] += xg_o
+        stats_torneo[o]['xg_s'] += xg_c
         stats_torneo[o]['p'] += 1
 
+# Modello Ibrido: 50% Peso Gol Reali, 50% Peso xG
 for team, s in stats_torneo.items():
     if s['p'] > 0 and team in scout_ratings:
         alpha = min(s['p'] * 0.15, 0.45)
-        perf_att = s['gf'] / (s['p'] * MEDIA_GOL_TORNEO)
-        perf_def = s['gs'] / (s['p'] * MEDIA_GOL_TORNEO)
+        
+        # Mix per la Forza Offensiva
+        prod_attacco = (s['gf'] * 0.5) + (s['xg_f'] * 0.5)
+        perf_att = (prod_attacco / s['p']) / MEDIA_GOL_TORNEO
+        
+        # Mix per la Solidità Difensiva
+        prod_difesa = (s['gs'] * 0.5) + (s['xg_s'] * 0.5)
+        perf_def = (prod_difesa / s['p']) / MEDIA_GOL_TORNEO
         
         scout_ratings[team]['attacco'] = max(0.5, (alpha * perf_att) + ((1 - alpha) * scout_ratings_base[team]['attacco']))
         scout_ratings[team]['difesa'] = max(0.3, (alpha * perf_def) + ((1 - alpha) * scout_ratings_base[team]['difesa']))
