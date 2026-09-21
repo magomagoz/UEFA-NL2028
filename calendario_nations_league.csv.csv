@@ -1,0 +1,157 @@
+Data;Ora;Girone;Casa;Fuori
+24/09/2026;18:00;D1;Andorra;Malta
+24/09/2026;20:45;A2;Olanda;Germania
+24/09/2026;20:45;A2;Serbia;Grecia
+24/09/2026;20:45;A4;Norvegia;Danimarca
+24/09/2026;20:45;A4;Portogallo;Galles
+24/09/2026;20:45;B3;Austria;Israele
+24/09/2026;20:45;B3;Kosovo;EIRE
+24/09/2026;20:45;D2;Liechtenstein;Lituania
+25/09/2026;18:00;B2;Georgia;Irlanda del Nord
+25/09/2026;18:00;C2;Armenia;Lettonia
+25/09/2026;20:45;A1;Italia;Belgio
+25/09/2026;20:45;A1;Turchia;Francia
+25/09/2026;20:45;B2;Ungheria;Ucraina
+25/09/2026;20:45;B4;Polonia;Bosnia
+25/09/2026;20:45;B4;Svezia;Romania
+25/09/2026;20:45;C2;Montenegro;Cipro
+26/09/2026;15:00;B1;Slovenia;Scozia
+26/09/2026;18:00;C1;San Marino;Finlandia
+26/09/2026;18:00;C3;Isola Faroer;Kazakistan
+26/09/2026;18:00;C4;Bulgaria;Lussemburgo
+26/09/2026;18:00;C4;Islanda;Estonia
+26/09/2026;20:45;A3;Repubblica Ceca;Croazia
+26/09/2026;20:45;A3;Inghilterra;Spagna
+26/09/2026;20:45;B1;Macedonia;Svizzera
+26/09/2026;20:45;C1;Albania;Bielorussia
+26/09/2026;20:45;C3;Slovacchia;Moldova
+27/09/2026;15:00;D2;Lituania;Azerbaigian
+27/09/2026;18:00;A2;Serbia;Olanda
+27/09/2026;18:00;A4;Danimarca;Galles
+27/09/2026;18:00;B3;Austria;Kosovo
+27/09/2026;18:00;D1;Gibilterra;Andorra
+27/09/2026;20:45;A2;Germania;Grecia
+27/09/2026;20:45;A4;Norvegia;Portogallo
+27/09/2026;20:45;B3;Israele;EIRE
+28/09/2026;18:00;B2;Georgia;Ucraina
+28/09/2026;18:00;C2;Armenia;Montenegro
+28/09/2026;18:00;C2;Lettonia;Cipro
+28/09/2026;20:45;A1;Belgio;Francia
+28/09/2026;20:45;A1;Turchia;Italia
+28/09/2026;20:45;B2;EIRE;Ungheria
+28/09/2026;20:45;B4;Romania;Bosnia
+28/09/2026;20:45;B4;Svezia;Polonia
+29/09/2026;18:00;C1;Finlandia;Bielorussia
+29/09/2026;18:00;C3;Moldova;Isole Faroer
+29/09/2026;20:45;A3;Repubblica Ceca;Inghilterra
+29/09/2026;20:45;A3;Spagna;Croazia
+29/09/2026;20:45;B1;Scozia;Svizzera
+29/09/2026;20:45;B1;Slovenia;Macedonia
+29/09/2026;20:45;C1;San Marino;Albania
+29/09/2026;20:45;C3;Slovacchia;Kazakistan
+29/09/2026;20:45;C4;Bulgaria;Estonia
+29/09/2026;20:45;C4;Lussemburgo;Islanda
+01/10/2026;18:00;D2;Azerbaigian;Liechtenstein
+01/10/2026;20:45;A2;Germania;Serbia
+01/10/2026;20:45;A2;Grecia;Olanda
+01/10/2026;20:45;A4;Danimarca;Portogallo
+01/10/2026;20:45;A4;Galles;Norvegia
+01/10/2026;20:45;B3;Israele;Kosovo
+01/10/2026;20:45;B3;EIRE;Austria
+01/10/2026;20:45;D1;Malta;Gibilterra
+02/10/2026;16:00;C3;Kazakistan;Moldova
+02/10/2026;18:00;C2;Cipro;Armenia
+02/10/2026;18:00;C2;Lettonia;Montenegro
+02/10/2026;20:45;A1;Belgio;Turchia
+02/10/2026;20:45;A1;Francia;Italia
+02/10/2026;20:45;B2;Ungheria;Georgia
+02/10/2026;20:45;B2;Ucraina;Irlanda del Nord
+02/10/2026;20:45;B4;Bosnia;Svezia
+02/10/2026;20:45;B4;Polonia;Romania
+02/10/2026;20:45;C3;Isola Faroer;Slovacchia
+03/10/2026;16:00;C1;Finlandia;Albania
+03/10/2026;18:00;A3;Croazia;Inghilterra
+03/10/2026;18:00;C1;Bielorussia;San Marino
+03/10/2026;18:00;C4;Estonia;Lussemburgo
+03/10/2026;18:00;C4;Islanda;Bulgaria
+03/10/2026;18:00;A3;Spagna;Repubblica Ceca
+03/10/2026;20:45;B1;Macedonia;Scozia
+03/10/2026;20:45;B1;Svizzera;Slovenia
+04/10/2026;15:00;D2;Azerbaigian;Lituania
+04/10/2026;18:00;B3;Kosovo;Austria
+04/10/2026;18:00;D1;Malta;Andorra
+04/10/2026;20:45;A2;Grecia;Germania
+04/10/2026;20:45;A2;Olanda;Serbia
+04/10/2026;20:45;A4;Portogallo;Norvegia
+04/10/2026;20:45;A4;Galles;Danimarca
+04/10/2026;20:45;B3;EIRE;Israele
+05/10/2026;18:00;C2;Cipro;Lettonia
+05/10/2026;20:45;A1;Francia;Belgio
+05/10/2026;20:45;A1;Italia;Turchia
+05/10/2026;20:45;B2;Irlanda del Nord;Georgia
+05/10/2026;20:45;B2;Ucraina;Ungheria
+05/10/2026;20:45;B4;Bosnia;Polonia
+05/10/2026;20:45;B4;Romania;Svezia
+05/10/2026;20:45;C2;Montenegro;Armenia
+06/10/2026;16:00;C3;Kazakistan;Isole Faroer
+06/10/2026;20:45;A3;Croazia;Spagna
+06/10/2026;20:45;A3;Inghilterra;Repubblica Ceca
+06/10/2026;20:45;B1;Scozia;Slovenia
+06/10/2026;20:45;B1;Svizzera;Macedonia
+06/10/2026;20:45;C1;Albania;San Marino
+06/10/2026;20:45;C1;Bielorussia;Finlandia
+06/10/2026;20:45;C3;Moldova;Slovacchia
+06/10/2026;20:45;C4;Estonia;Islanda
+06/10/2026;20:45;C4;Lussemburgo;Bulgaria
+12/11/2026;18:00;A1;Turchia;Belgio
+12/11/2026;18:00;C2;Armenia;Cipro
+12/11/2026;20:45;A1;Italia;Francia
+12/11/2026;20:45;A3;Repubblica Ceca;Spagna
+12/11/2026;20:45;A3;Inghilterra;Croazia
+12/11/2026;20:45;C1;Albania;Finlandia
+12/11/2026;20:45;C1;San Marino;Bielorussia
+12/11/2026;20:45;C2;Montenegro;Lettonia
+13/11/2026;18:00;C3;Moldova;Kazakistan
+13/11/2026;20:45;A2;Olanda;Grecia
+13/11/2026;20:45;A2;Serbia;Germania
+13/11/2026;20:45;B1;Scozia;Macedonia
+13/11/2026;20:45;B1;Slovenia;Svizzera
+13/11/2026;20:45;C3;Slovacchia;Isole Faroer
+13/11/2026;20:45;C4;Bulgaria;Islanda
+13/11/2026;20:45;C4;Lussemburgo;Estonia
+13/11/2026;20:45;D1;Andorra;Gibilterra
+13/11/2026;20:45;D2;Liechtenstein;Azerbaigian
+14/11/2026;15:00;B3;Kosovo;Israele
+14/11/2026;18:00;A4;Norvegia;Galles
+14/11/2026;18:00;B2;Georgia;Ungheria
+14/11/2026;20:45;A4;Portogallo;Danimarca
+14/11/2026;20:45;B2;Irlanda del Nord;Ucraina
+14/11/2026;20:45;B3;Austria;EIRE
+14/11/2026;20:45;B4;Romania;Polonia
+14/11/2026;20:45;B4;Svezia;Bosnia
+15/11/2026;16:00;C2;Cipro;Montenegro
+15/11/2026;16:00;C2;Lettonia;Armenia
+15/11/2026;18:00;C1;Bielorussia;Albania
+15/11/2026;18:00;C1;Finlandia;San Marino
+15/11/2026;20:45;A1;Belgio;Italia
+15/11/2026;20:45;A1;Francia;Turchia
+15/11/2026;20:45;A3;Croazia;Repubblica Ceca
+15/11/2026;20:45;A3;Spagna;Inghilterra
+16/11/2026;16:00;C3;Isola Faroer;Moldova
+16/11/2026;16:00;C3;Kazakistan;Slovacchia
+16/11/2026;18:00;C4;Estonia;Bulgaria
+16/11/2026;18:00;C4;Islanda;Lussemburgo
+16/11/2026;20:45;D2;Lituania;Liechtenstein
+16/11/2026;20:45;A2;Germania;Olanda
+16/11/2026;20:45;A2;Grecia;Serbia
+16/11/2026;20:45;B1;Macedonia;Slovenia
+16/11/2026;20:45;B1;Svizzera;Scozia
+16/11/2026;20:45;D1;Gibilterra;Malta
+17/11/2026;20:45;A4;Danimarca;Norvegia
+17/11/2026;20:45;A4;Galles;Portogallo
+17/11/2026;20:45;B2;Ungheria;Irlanda del Nord
+17/11/2026;20:45;B2;Ucraina;Georgia
+17/11/2026;20:45;B3;Israele;Austria
+17/11/2026;20:45;B3;EIRE;Kosovo
+17/11/2026;20:45;B4;Bosnia;Romania
+17/11/2026;20:45;B4;Polonia;Svezia
