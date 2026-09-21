@@ -1,1 +1,7 @@
-FPDF
+streamlit
+pandas
+requests
+pytz
+fpdf
+scipy
+
