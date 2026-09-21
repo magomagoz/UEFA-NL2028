@@ -271,17 +271,36 @@ def genera_pdf():
     pdf.rect(0, 0, 210, 32, 'F') 
         
     try:
-        url_casa = f"https://flagcdn.com/w80/{iso_map.get(casa, 'un')}.png"
-        url_ospite = f"https://flagcdn.com/w80/{iso_map.get(ospite, 'un')}.png"
+        # Recupera la sigla, se non esiste nel dizionario per sicurezza la forziamo
+        sigla_casa = iso_map.get(casa, 'un')
+        sigla_ospite = iso_map.get(ospite, 'un')
         
+        # Mappatura manuale d'emergenza in caso di dizionario non aggiornato
+        if casa == "Andorra": sigla_casa = "ad"
+        if ospite == "Malta": sigla_ospite = "mt"
+        
+        url_casa = f"https://flagcdn.com/w80/{sigla_casa}.png"
+        url_ospite = f"https://flagcdn.com/w80/{sigla_ospite}.png"
+        
+        # Aggiungiamo l'intestazione di un browser per aggirare il blocco anti-bot (Errore 403)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        
+        # Download bandiera Casa
+        req_casa = urllib.request.Request(url_casa, headers=headers)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as f_casa:
-            urllib.request.urlretrieve(url_casa, f_casa.name)
+            f_casa.write(urllib.request.urlopen(req_casa).read())
+            f_casa.flush()
             pdf.image(f_casa.name, 12, 9, 22)
             
+        # Download bandiera Ospite
+        req_ospite = urllib.request.Request(url_ospite, headers=headers)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as f_ospite:
-            urllib.request.urlretrieve(url_ospite, f_ospite.name)
+            f_ospite.write(urllib.request.urlopen(req_ospite).read())
+            f_ospite.flush()
             pdf.image(f_ospite.name, 176, 9, 22)
-    except Exception:
+            
+    except Exception as e:
+        # Se fallisce, stampa silenziosamente senza bloccare il resto del PDF
         pass 
     
     pdf.set_text_color(255, 255, 255)
