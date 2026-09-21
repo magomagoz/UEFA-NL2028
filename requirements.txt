@@ -4,4 +4,4 @@ requests
 pytz
 fpdf
 scipy
-
+matplotlib
