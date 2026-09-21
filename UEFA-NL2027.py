@@ -79,6 +79,7 @@ st.write("Inserisci i risultati reali della Nations League, poi **salva il file*
 
 # --- 6. BASELINE STRUTTURA SQUADRE EUROPEE (Nations League) ---
 scout_ratings_base = {
+    # --- LEGA A & B (Top & Medium Tier) ---
     'Francia': {'attacco': 1.85, 'difesa': 0.65, 'flag': '🇫🇷'}, 'Spagna': {'attacco': 1.80, 'difesa': 0.65, 'flag': '🇪🇸'},
     'Inghilterra': {'attacco': 1.80, 'difesa': 0.65, 'flag': '🇬🇧'}, 'Portogallo': {'attacco': 1.75, 'difesa': 0.70, 'flag': '🇵🇹'},
     'Germania': {'attacco': 1.70, 'difesa': 0.75, 'flag': '🇩🇪'}, 'Olanda': {'attacco': 1.65, 'difesa': 0.75, 'flag': '🇳🇱'},
@@ -96,9 +97,33 @@ scout_ratings_base = {
     'Albania': {'attacco': 1.05, 'difesa': 0.95, 'flag': '🇦🇱'}, 'Montenegro': {'attacco': 1.00, 'difesa': 1.00, 'flag': '🇲🇪'},
     'Islanda': {'attacco': 1.00, 'difesa': 1.05, 'flag': '🇮🇸'}, 'Bosnia Erzegovina': {'attacco': 1.05, 'difesa': 1.05, 'flag': '🇧🇦'},
     'Israele': {'attacco': 1.10, 'difesa': 1.10, 'flag': '🇮🇱'}, 'Georgia': {'attacco': 1.10, 'difesa': 1.05, 'flag': '🇬🇪'},
+    
+    # --- LEGA C & D (Lower Tier) ---
     'Bulgaria': {'attacco': 0.90, 'difesa': 1.05, 'flag': '🇧🇬'}, 'Lussemburgo': {'attacco': 0.90, 'difesa': 1.10, 'flag': '🇱🇺'},
     'Kosovo': {'attacco': 1.00, 'difesa': 1.05, 'flag': '🇽🇰'}, 'Kazakistan': {'attacco': 0.90, 'difesa': 1.10, 'flag': '🇰🇿'},
-    'Armenia': {'attacco': 0.90, 'difesa': 1.15, 'flag': '🇦🇲'}, 'Cipro': {'attacco': 0.85, 'difesa': 1.20, 'flag': '🇨🇾'}
+    'Armenia': {'attacco': 0.90, 'difesa': 1.15, 'flag': '🇦🇲'}, 'Cipro': {'attacco': 0.85, 'difesa': 1.20, 'flag': '🇨🇾'},
+    'Bielorussia': {'attacco': 0.85, 'difesa': 1.15, 'flag': '🇧🇾'}, 'Lituania': {'attacco': 0.80, 'difesa': 1.20, 'flag': '🇱🇹'},
+    'Estonia': {'attacco': 0.80, 'difesa': 1.25, 'flag': '🇪🇪'}, 'Lettonia': {'attacco': 0.85, 'difesa': 1.20, 'flag': '🇱🇻'},
+    'Far Oer': {'attacco': 0.75, 'difesa': 1.30, 'flag': '🇫🇴'}, 'Macedonia del Nord': {'attacco': 0.95, 'difesa': 1.10, 'flag': '🇲🇰'},
+    'Moldavia': {'attacco': 0.75, 'difesa': 1.35, 'flag': '🇲🇩'}, 'Malta': {'attacco': 0.70, 'difesa': 1.40, 'flag': '🇲🇹'},
+    'Andorra': {'attacco': 0.65, 'difesa': 1.45, 'flag': '🇦🇩'}, 'San Marino': {'attacco': 0.50, 'difesa': 1.60, 'flag': '🇸🇲'},
+    'Liechtenstein': {'attacco': 0.60, 'difesa': 1.50, 'flag': '🇱🇮'}, 'Gibilterra': {'attacco': 0.55, 'difesa': 1.55, 'flag': '🇬🇮'}
+}
+
+iso_map = {
+    'Francia': 'fr', 'Spagna': 'es', 'Inghilterra': 'gb-eng', 'Portogallo': 'pt',
+    'Germania': 'de', 'Olanda': 'nl', 'Italia': 'it', 'Belgio': 'be',
+    'Croazia': 'hr', 'Danimarca': 'dk', 'Svizzera': 'ch', 'Austria': 'at',
+    'Serbia': 'rs', 'Polonia': 'pl', 'Ucraina': 'ua', 'Ungheria': 'hu',
+    'Turchia': 'tr', 'Svezia': 'se', 'Norvegia': 'no', 'Scozia': 'gb-sct',
+    'Galles': 'gb-wls', 'Repubblica Ceca': 'cz', 'Grecia': 'gr', 'Romania': 'ro',
+    'Slovacchia': 'sk', 'Slovenia': 'si', 'Irlanda': 'ie', 'Finlandia': 'fi',
+    'Albania': 'al', 'Montenegro': 'me', 'Islanda': 'is', 'Bosnia Erzegovina': 'ba',
+    'Israele': 'il', 'Georgia': 'ge', 'Bulgaria': 'bg', 'Lussemburgo': 'lu',
+    'Kosovo': 'xk', 'Kazakistan': 'kz', 'Armenia': 'am', 'Cipro': 'cy',
+    'Bielorussia': 'by', 'Lituania': 'lt', 'Estonia': 'ee', 'Lettonia': 'lv',
+    'Far Oer': 'fo', 'Macedonia del Nord': 'mk', 'Moldavia': 'md', 'Malta': 'mt',
+    'Andorra': 'ad', 'San Marino': 'sm', 'Liechtenstein': 'li', 'Gibilterra': 'gi'
 }
 
 iso_map = {
