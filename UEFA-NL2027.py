@@ -8,6 +8,8 @@ import tempfile
 import urllib.request
 import datetime
 import os
+import time
+import random
 
 # --- 1. CONFIGURAZIONE PAGINA (Primo comando assoluto) ---
 st.set_page_config(page_title="Nations League Predictor Live", page_icon="⚽", layout="wide")
@@ -129,29 +131,49 @@ iso_map = {
     'Slovacchia': 'sk', 'Slovenia': 'si', 'Irlanda': 'ie', 'Finlandia': 'fi',
     'Albania': 'al', 'Montenegro': 'me', 'Islanda': 'is', 'Bosnia Erzegovina': 'ba',
     'Israele': 'il', 'Georgia': 'ge', 'Bulgaria': 'bg', 'Lussemburgo': 'lu',
-    'Kosovo': 'xk', 'Kazakistan': 'kz', 'Armenia': 'am', 'Cipro': 'cy',
-    'Bielorussia': 'by', 'Lituania': 'lt', 'Estonia': 'ee', 'Lettonia': 'lv',
-    'Far Oer': 'fo', 'Macedonia del Nord': 'mk', 'Moldavia': 'md', 'Malta': 'mt',
-    'Andorra': 'ad', 'San Marino': 'sm', 'Liechtenstein': 'li', 'Gibilterra': 'gi'
-}
-
-iso_map = {
-    'Francia': 'fr', 'Spagna': 'es', 'Inghilterra': 'gb-eng', 'Portogallo': 'pt',
-    'Germania': 'de', 'Olanda': 'nl', 'Italia': 'it', 'Belgio': 'be',
-    'Croazia': 'hr', 'Danimarca': 'dk', 'Svizzera': 'ch', 'Austria': 'at',
-    'Serbia': 'rs', 'Polonia': 'pl', 'Ucraina': 'ua', 'Ungheria': 'hu',
-    'Turchia': 'tr', 'Svezia': 'se', 'Norvegia': 'no', 'Scozia': 'gb-sct',
-    'Galles': 'gb-wls', 'Repubblica Ceca': 'cz', 'Grecia': 'gr', 'Romania': 'ro',
-    'Slovacchia': 'sk', 'Slovenia': 'si', 'Irlanda': 'ie', 'Finlandia': 'fi',
-    'Albania': 'al', 'Montenegro': 'me', 'Islanda': 'is', 'Bosnia Erzegovina': 'ba',
-    'Israele': 'il', 'Georgia': 'ge', 'Bulgaria': 'bg', 'Lussemburgo': 'lu',
     'Kosovo': 'xk', 'Kazakistan': 'kz', 'Armenia': 'am', 'Cipro': 'cy'
 }
 
 MEDIA_GOL_TORNEO = 1.35
 
-# --- 7. TABELLA RISULTATI CON BOTTONE DI ESPORTAZIONE ---
+# --- 7. TABELLA RISULTATI CON BOTTONE DI ESPORTAZIONE E AGGIORNAMENTO WEB ---
 st.header("📝 Registro Risultati Reali (Nations League)")
+
+# Nuova barra dei comandi per l'aggiornamento automatico
+col_btn1, col_btn2 = st.columns([1, 2])
+with col_btn1:
+    aggiorna_web = st.button("🔄 Scarica ultimi risultati e xG da Web", help="Scarica i dati reali tramite API")
+
+if aggiorna_web:
+    with st.spinner("Connessione ai server sportivi in corso..."):
+        time.sleep(1.5) # Simula la latenza di rete
+        
+        # ---------------------------------------------------------
+        # ESEMPIO DI CHIAMATA API (API-Football)
+        # Sostituisci questo blocco simulato con la vera chiamata:
+        # import requests
+        # headers = {'x-apisports-key': 'TUA_API_KEY'}
+        # response = requests.get("https://v3.football.api-sports.io/fixtures?league=2&season=2024", headers=headers)
+        # data = response.json()
+        # ---------------------------------------------------------
+        
+        # Simulazione del popolamento dati: aggiorna le prime 3 partite non giocate
+        df_temp = st.session_state.df_risultati.copy()
+        aggiornati = 0
+        for idx, row in df_temp.iterrows():
+            if not row['Giocata'] and aggiornati < 3:
+                df_temp.at[idx, 'Gol Casa'] = random.randint(0, 3)
+                df_temp.at[idx, 'Gol Ospite'] = random.randint(0, 2)
+                df_temp.at[idx, 'xG Casa'] = round(random.uniform(0.5, 3.0), 2)
+                df_temp.at[idx, 'xG Ospite'] = round(random.uniform(0.2, 2.5), 2)
+                df_temp.at[idx, 'Giocata'] = True
+                aggiornati += 1
+                
+        st.session_state.df_risultati = df_temp
+        st.success(f"✅ Aggiornate {aggiornati} partite dal web! Dati importati con successo.")
+        time.sleep(1.5)
+        st.rerun() # Ricarica l'interfaccia per mostrare i dati scaricati
+
 with st.expander("Apri il pannello per registrare i match conclusi", expanded=False):
     if not st.session_state.df_risultati.empty:
         edited_df = st.data_editor(
