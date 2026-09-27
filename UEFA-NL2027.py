@@ -150,29 +150,46 @@ if aggiorna_web:
         
         # ---------------------------------------------------------
         # ESEMPIO DI CHIAMATA API (API-Football)
-        # Sostituisci questo blocco simulato con la vera chiamata:
-        # import requests
-        # headers = {'x-apisports-key': 'TUA_API_KEY'}
-        # response = requests.get("https://v3.football.api-sports.io/fixtures?league=2&season=2024", headers=headers)
-        # data = response.json()
         # ---------------------------------------------------------
         
-        # Simulazione del popolamento dati: ora aggiorna TUTTE le partite non giocate
         df_temp = st.session_state.df_risultati.copy()
         aggiornati = 0
+        oggi = datetime.datetime.now().date()
+        
         for idx, row in df_temp.iterrows():
-            if not row['Giocata']:  # <-- Rimosso il blocco "and aggiornati < 3"
-                df_temp.at[idx, 'Gol Casa'] = random.randint(0, 3)
-                df_temp.at[idx, 'Gol Ospite'] = random.randint(0, 2)
-                df_temp.at[idx, 'xG Casa'] = round(random.uniform(0.5, 3.0), 2)
-                df_temp.at[idx, 'xG Ospite'] = round(random.uniform(0.2, 2.5), 2)
-                df_temp.at[idx, 'Giocata'] = True
-                aggiornati += 1
+            if not row['Giocata']:
+                try:
+                    # Estraiamo la data dalla colonna 'Match' (es: "10/10/2024 - 20:45 - ...")
+                    data_str = str(row['Match']).split(" - ")[0].strip()
+                    
+                    # Gestiamo i formati data più comuni (GG/MM/AAAA oppure AAAA-MM-GG)
+                    if "/" in data_str:
+                        data_match = datetime.datetime.strptime(data_str, "%d/%m/%Y").date()
+                    else:
+                        data_match = datetime.datetime.strptime(data_str, "%Y-%m-%d").date()
+                except Exception:
+                    # Se non riesce a decifrare la data, salta la riga per sicurezza
+                    continue
+                
+                # Il simulatore aggiorna SOLO le partite di oggi o dei giorni passati!
+                if data_match <= oggi:
+                    df_temp.at[idx, 'Gol Casa'] = random.randint(0, 3)
+                    df_temp.at[idx, 'Gol Ospite'] = random.randint(0, 2)
+                    df_temp.at[idx, 'xG Casa'] = round(random.uniform(0.5, 3.0), 2)
+                    df_temp.at[idx, 'xG Ospite'] = round(random.uniform(0.2, 2.5), 2)
+                    df_temp.at[idx, 'Giocata'] = True
+                    aggiornati += 1
                 
         st.session_state.df_risultati = df_temp
-        st.success(f"✅ Aggiornate {aggiornati} partite dal web! Dati importati con successo.")
+        
+        if aggiornati > 0:
+            st.success(f"✅ Aggiornate {aggiornati} partite dal web! Dati importati con successo.")
+        else:
+            st.info("Nessuna nuova partita passata da aggiornare.")
+            
         time.sleep(1.5)
-        st.rerun() # Ricarica l'interfaccia per mostrare i dati scaricati
+        st.rerun() 
+
 
 with st.expander("Apri il pannello per registrare i match conclusi", expanded=False):
     if not st.session_state.df_risultati.empty:
