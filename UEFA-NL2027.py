@@ -157,11 +157,11 @@ if aggiorna_web:
         # data = response.json()
         # ---------------------------------------------------------
         
-        # Simulazione del popolamento dati: aggiorna le prime 3 partite non giocate
+        # Simulazione del popolamento dati: ora aggiorna TUTTE le partite non giocate
         df_temp = st.session_state.df_risultati.copy()
         aggiornati = 0
         for idx, row in df_temp.iterrows():
-            if not row['Giocata'] and aggiornati < 3:
+            if not row['Giocata']:  # <-- Rimosso il blocco "and aggiornati < 3"
                 df_temp.at[idx, 'Gol Casa'] = random.randint(0, 3)
                 df_temp.at[idx, 'Gol Ospite'] = random.randint(0, 2)
                 df_temp.at[idx, 'xG Casa'] = round(random.uniform(0.5, 3.0), 2)
@@ -195,10 +195,14 @@ with st.expander("Apri il pannello per registrare i match conclusi", expanded=Fa
         
         csv_export = edited_df[["ID_Match", "Gol Casa", "xG Casa", "Gol Ospite", "xG Ospite", "Giocata"]].to_csv(index=False, sep=";").encode('utf-8')
         
+        # Calcolo della data odierna per il nome del file
+        data_odierna = datetime.datetime.now().strftime("%Y-%m-%d")
+        nome_file = f"risultati_nations_salvati_{data_odierna}.csv"
+        
         st.download_button(
             label="💾 CLICCA QUI PER SCARICARE I RISULTATI AGGIORNATI",
             data=csv_export,
-            file_name="risultati_nations_salvati.csv",
+            file_name=nome_file,  # <-- Inserita la variabile dinamica
             mime="text/csv",
             help="Scarica questo file e ricaricalo domani nella sidebar a sinistra per riprendere da dove avevi lasciato!"
         )
