@@ -171,8 +171,8 @@ if aggiorna_web:
                     # Se non riesce a decifrare la data, salta la riga per sicurezza
                     continue
                 
-                # Il simulatore aggiorna SOLO le partite di oggi o dei giorni passati!
-                if data_match <= oggi:
+                # Il simulatore aggiorna SOLO le partite dei giorni passati!
+                if data_match < oggi:
                     df_temp.at[idx, 'Gol Casa'] = random.randint(0, 3)
                     df_temp.at[idx, 'Gol Ospite'] = random.randint(0, 2)
                     df_temp.at[idx, 'xG Casa'] = round(random.uniform(0.5, 3.0), 2)
