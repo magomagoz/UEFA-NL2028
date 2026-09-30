@@ -54,35 +54,35 @@ if 'df_risultati' not in st.session_state:
     st.session_state.df_risultati = pd.DataFrame(init_data)
 
 # --- 4. GESTIONE SALVATAGGI: CARICAMENTO FILE STORICO (Upload) ---
-st.sidebar.header("💾 Carica Salvataggio")
-storico_file = st.sidebar.file_uploader("Ripristina i risultati salvati (CSV)", type=['csv'], help="Carica qui il file 'risultati_nations_salvati.csv' che hai scaricato in precedenza.")
+#st.sidebar.header("💾 Carica Salvataggio")
+#storico_file = st.sidebar.file_uploader("Ripristina i risultati salvati (CSV)", type=['csv'], help="Carica qui il file 'risultati_nations_salvati.csv' che hai scaricato in precedenza.")
 
-if storico_file is not None:
-    if st.session_state.get('last_loaded_file') != storico_file.name:
-        try:
-            df_salvato = pd.read_csv(storico_file, sep=";")
-            df_base = st.session_state.df_risultati.drop(columns=["Gol Casa", "xG Casa", "Gol Ospite", "xG Ospite", "Giocata"], errors='ignore')
+#if storico_file is not None:
+    #if st.session_state.get('last_loaded_file') != storico_file.name:
+        #try:
+            #df_salvato = pd.read_csv(storico_file, sep=";")
+            #df_base = st.session_state.df_risultati.drop(columns=["Gol Casa", "xG Casa", "Gol Ospite", "xG Ospite", "Giocata"], errors='ignore')
             
             # Assicuriamoci che il file salvato contenga le colonne xG per retrocompatibilità
-            if "xG Casa" not in df_salvato.columns: df_salvato["xG Casa"] = 0.0
-            if "xG Ospite" not in df_salvato.columns: df_salvato["xG Ospite"] = 0.0
+            #if "xG Casa" not in df_salvato.columns: df_salvato["xG Casa"] = 0.0
+            #if "xG Ospite" not in df_salvato.columns: df_salvato["xG Ospite"] = 0.0
             
-            df_merged = pd.merge(df_base, df_salvato[["ID_Match", "Gol Casa", "xG Casa", "Gol Ospite", "xG Ospite", "Giocata"]], on="ID_Match", how="left")
+            #df_merged = pd.merge(df_base, df_salvato[["ID_Match", "Gol Casa", "xG Casa", "Gol Ospite", "xG Ospite", "Giocata"]], on="ID_Match", how="left")
             
-            df_merged["Gol Casa"] = df_merged["Gol Casa"].fillna(0).astype(int)
-            df_merged["xG Casa"] = df_merged["xG Casa"].fillna(0.0).astype(float)
-            df_merged["Gol Ospite"] = df_merged["Gol Ospite"].fillna(0).astype(int)
-            df_merged["xG Ospite"] = df_merged["xG Ospite"].fillna(0.0).astype(float)
-            df_merged["Giocata"] = df_merged["Giocata"].fillna(False).astype(bool)
+            #df_merged["Gol Casa"] = df_merged["Gol Casa"].fillna(0).astype(int)
+            #df_merged["xG Casa"] = df_merged["xG Casa"].fillna(0.0).astype(float)
+            #df_merged["Gol Ospite"] = df_merged["Gol Ospite"].fillna(0).astype(int)
+            #df_merged["xG Ospite"] = df_merged["xG Ospite"].fillna(0.0).astype(float)
+            #df_merged["Giocata"] = df_merged["Giocata"].fillna(False).astype(bool)
             
-            st.session_state.df_risultati = df_merged
-            st.session_state.last_loaded_file = storico_file.name
-            st.sidebar.success("✅ Salvataggio ripristinato con successo!")
-            st.rerun()
-        except Exception as e:
-            st.sidebar.error(f"Errore durante il caricamento: {e}")
+            #st.session_state.df_risultati = df_merged
+            #st.session_state.last_loaded_file = storico_file.name
+            #st.sidebar.success("✅ Salvataggio ripristinato con successo!")
+            #st.rerun()
+        #except Exception as e:
+            #st.sidebar.error(f"Errore durante il caricamento: {e}")
 
-st.sidebar.markdown("---")
+#st.sidebar.markdown("---")
 
 # --- 5. INTERFACCIA GRAFICA: BANNER ---
 st.image("banner1.png", use_container_width=True)
