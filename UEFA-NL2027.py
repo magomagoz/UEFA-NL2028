@@ -287,6 +287,50 @@ st.sidebar.subheader("Strategia & Infermeria")
 mod_motivazione_casa = st.sidebar.slider(f"Motivazione {casa}", 0.8, 1.2, 1.0, step=0.1)
 mod_motivazione_ospite = st.sidebar.slider(f"Motivazione {ospite}", 0.8, 1.2, 1.0, step=0.1)
 
+# --- SEZIONE: PROGRESSIONE MASANIELLO (TARGET) ---
+st.sidebar.markdown("---")
+st.sidebar.header("📈 Masaniello 5x5 (Target)")
+
+# 1. Inizializzazione delle variabili in memoria (Session State)
+if 'masa_target' not in st.session_state:
+    st.session_state.masa_target = 100.0
+if 'masa_cassa' not in st.session_state:
+    st.session_state.masa_cassa = 0.0
+
+# 2. Input utente
+target = st.sidebar.number_input("Target Netto (€)", min_value=1.0, value=st.session_state.masa_target, step=10.0)
+st.session_state.masa_target = target
+
+cassa_esposta = st.sidebar.number_input("Cassa Esposta (Passivo €)", min_value=0.0, value=st.session_state.masa_cassa, step=1.0)
+st.session_state.masa_cassa = cassa_esposta
+
+quota = st.sidebar.number_input("Quota Totale Sistema", min_value=1.01, value=40.0, step=1.0)
+
+# 3. Motore Matematico
+if quota > 1.0:
+    puntata = (target + cassa_esposta) / (quota - 1.0)
+    
+    st.sidebar.success(f"**PUNTATA DA GIOCARE:**\n# € {puntata:.2f}")
+    
+    # Verifica matematica per l'utente
+    ricavo_totale = puntata * quota
+    profitto_netto = ricavo_totale - puntata - cassa_esposta
+    st.sidebar.caption(f"*(Se vinci incassi € {ricavo_totale:.2f}. Togliendo la puntata e il passivo recuperato, il guadagno pulito è di € {profitto_netto:.2f})*")
+    
+    # 4. Pulsanti di gestione della progressione
+    st.sidebar.markdown("**Esito del Sistema:**")
+    col1, col2 = st.sidebar.columns(2)
+    
+    if col1.button("🔴 PERSO"):
+        # Se perde, aggiunge la puntata appena fatta alla cassa esposta
+        st.session_state.masa_cassa += puntata
+        st.rerun()
+        
+    if col2.button("🟢 VINTO"):
+        # Se vince, azzera la cassa esposta e chiude il ciclo
+        st.session_state.masa_cassa = 0.0
+        st.rerun()
+
 # --- 10. GESTIONE SQUADRE PROVVISORIE (TBD) ---
 fallback_profile = {'attacco': 1.00, 'difesa': 1.00, 'flag': '🏳️'}
 r_casa = scout_ratings.get(casa, fallback_profile)
